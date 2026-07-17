@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cermin LED Arch — Cahaya yang Bikin Betah Ngaca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-1:#181513;
+    --bg-2:#211C19;
+    --panel:#2A2420;
+    --line:#40372F;
+    --ivory:#F3ECE3;
+    --ivory-dim:#BDB1A2;
+    --glow-warm:#FFD9A0;
+    --glow-cool:#DCEFFB;
+    --rose:#D98E82;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg-1);
+    color:var(--ivory);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+  }
+  a{color:inherit;}
+
+  .hero{
+    min-height:90vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:2.5rem 1.5rem 3rem;
+    background:radial-gradient(ellipse at 50% 0%, var(--bg-2) 0%, var(--bg-1) 65%);
+  }
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--rose);
+    margin-bottom:1.25rem;
+  }
+  .headline{
+    font-family:'Fraunces',serif;
+    font-size:clamp(2.1rem, 5.6vw, 3.4rem);
+    font-weight:500;
+    max-width:18ch;
+    line-height:1.15;
+    margin-bottom:1rem;
+  }
+  .headline em{
+    font-style:italic;
+    color:var(--rose);
+  }
+  .sub{
+    color:var(--ivory-dim);
+    max-width:40ch;
+    font-size:1.02rem;
+    margin-bottom:2.5rem;
+  }
+
+  /* SIGNATURE: arch mirror with adjustable glow */
+  .demo{
+    width:100%;
+    max-width:300px;
+    margin-bottom:2rem;
+  }
+  .mirror-wrap{
+    position:relative;
+    width:220px;
+    height:280px;
+    margin:0 auto 1.25rem;
+  }
+  .mirror-frame{
+    position:absolute;
+    inset:0;
+    border-radius:110px 110px 12px 12px;
+    background:linear-gradient(160deg, #3A322B, #221D19);
+    box-shadow:0 0 0 1px var(--line);
+  }
+  .mirror-glass{
+    position:absolute;
+    inset:14px;
+    border-radius:96px 96px 6px 6px;
+    background:linear-gradient(155deg, #6C7580 0%, #3E434C 55%, #2A2E34 100%);
+  }
+  .mirror-glow{
+    position:absolute;
+    inset:14px;
+    border-radius:96px 96px 6px 6px;
+    box-shadow:0 0 18px 6px var(--glow-warm), inset 0 0 14px 3px var(--glow-warm);
+    opacity:0.55;
+    transition:box-shadow 0.35s ease, opacity 0.35s ease;
+    pointer-events:none;
+  }
+  .slider-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    color:var(--ivory-dim);
+    max-width:260px;
+    margin:0 auto;
+  }
+  input[type="range"]{
+    flex:1;
+    accent-color:var(--rose);
+  }
+
+  .cta{
+    display:inline-block;
+    background:var(--rose);
+    color:#241209;
+    font-weight:600;
+    font-size:1rem;
+    padding:0.95rem 2.2rem;
+    border-radius:100px;
+    text-decoration:none;
+    transition:transform 0.15s ease, background 0.15s ease;
+  }
+  .cta:hover{transform:translateY(-2px); background:#E4A498;}
+  .cta-note{
+    font-size:12px;
+    color:var(--ivory-dim);
+    margin-top:0.75rem;
+    font-family:'Space Mono',monospace;
+  }
+
+  .features{
+    padding:4rem 1.5rem;
+    max-width:920px;
+    margin:0 auto;
+  }
+  .section-title{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:1.6rem;
+    text-align:center;
+  }
+  .features-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1.5rem;
+    margin-top:2rem;
+  }
+  .feature{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:1.5rem;
+  }
+  .feature-num{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    color:var(--rose);
+    margin-bottom:0.6rem;
+  }
+  .feature h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:1.15rem;
+    margin-bottom:0.5rem;
+  }
+  .feature p{
+    color:var(--ivory-dim);
+    font-size:0.92rem;
+  }
+
+  .final{
+    text-align:center;
+    padding:4rem 1.5rem 5rem;
+    background:var(--bg-2);
+  }
+  .final .headline{font-size:clamp(1.6rem,4vw,2.2rem); max-width:22ch; margin:0 auto 1.5rem;}
+
+  .disclosure{
+    text-align:center;
+    padding:1.5rem;
+    font-size:11px;
+    color:var(--ivory-dim);
+    font-family:'Space Mono',monospace;
+    border-top:1px solid var(--line);
+  }
+
+  @media (max-width:640px){
+    .features-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <p class="eyebrow">arch LED mirror</p>
+  <h1 class="headline">Cahaya yang bikin<br><em>betah ngaca</em></h1>
+  <p class="sub">Lampu LED melingkar di sekeliling cermin, terang lembut dan merata — nggak ada bayangan aneh kayak lampu kamar biasa. Atur sendiri kehangatan cahayanya.</p>
+
+  <div class="demo">
+    <div class="mirror-wrap">
+      <div class="mirror-frame"></div>
+      <div class="mirror-glass"></div>
+      <div class="mirror-glow" id="glow"></div>
+    </div>
+    <div class="slider-row">
+      <span>Hangat</span>
+      <input type="range" min="0" max="100" value="30" id="tempSlider">
+      <span>Netral</span>
+    </div>
+  </div>
+
+  <a class="cta" href="#" id="ctaLink" target="_blank" rel="noopener">Lihat produk di Shopee</a>
+  <p class="cta-note">*Klik Link — untuk dapat harga & promo yang sama.</p>
+</section>
+
+<section class="features">
+  <h2 class="section-title">Kenapa banyak orang ganti ke ini</h2>
+  <div class="features-grid">
+    <div class="feature">
+      <p class="feature-num">01</p>
+      <h3>Cahaya merata</h3>
+      <p>LED melingkar di seluruh tepi cermin bikin wajah kelihatan natural, cocok buat makeup atau video call.</p>
+    </div>
+    <div class="feature">
+      <p class="feature-num">02</p>
+      <h3>Warna cahaya bisa diatur</h3>
+      <p>Geser dari hangat ke netral sesuai suasana kamar atau kebutuhan — tinggal sentuh panel di cermin.</p>
+    </div>
+    <div class="feature">
+      <p class="feature-num">03</p>
+      <h3>Bentuk arch estetik</h3>
+      <p>Desain lengkung minimalis, gampang jadi centerpiece kamar tidur atau ruang tamu.</p>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <h2 class="headline">Satu cermin, sekaligus jadi lampu kamar</h2>
+  <a class="cta" href="#" id="ctaLink2" target="_blank" rel="noopener">Cek harga & stok sekarang</a>
+</section>
+
+<p class="disclosure">Halaman ini berisi tautan Shopee Marketplace.</p>
+
+<script>
+  const link = "https://s.shopee.co.id/7KvQTQhsG6";
+  document.getElementById('ctaLink').href = link;
+  document.getElementById('ctaLink2').href = link;
+
+  const slider = document.getElementById('tempSlider');
+  const glow = document.getElementById('glow');
+
+  slider.addEventListener('input', () => {
+    const v = parseInt(slider.value, 10);
+    const warm = '#FFD9A0';
+    const cool = '#DCEFFB';
+    const color = v > 50 ? cool : warm;
+    glow.style.boxShadow = `0 0 18px 6px ${color}, inset 0 0 14px 3px ${color}`;
+  });
+</script>
+
+</body>
+</html>

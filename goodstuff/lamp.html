@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OFEEL Solar Wall Lamp — Nyala Sendiri Tiap Malam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --dusk-1:#0E1626;
+    --dusk-2:#16233A;
+    --dusk-3:#223454;
+    --glow-1:#F5A623;
+    --glow-2:#F2C572;
+    --cream:#F7F1E4;
+    --cream-dim:#C7C2B4;
+    --slate:#3A4A66;
+    --panel:#1B2740;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--dusk-1);
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  .voice{font-family:'Fraunces',serif;}
+  a{color:inherit;}
+
+  /* HERO */
+  .hero{
+    position:relative;
+    min-height:88vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:2rem 1.5rem 3rem;
+    background:linear-gradient(180deg, var(--dusk-1) 0%, var(--dusk-2) 55%, var(--dusk-3) 100%);
+    transition:background 0.6s ease;
+  }
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--glow-2);
+    margin-bottom:1.25rem;
+  }
+  .headline{
+    font-size:clamp(2.2rem, 6vw, 3.6rem);
+    font-weight:500;
+    max-width:16ch;
+    line-height:1.12;
+    margin-bottom:1rem;
+  }
+  .headline em{
+    font-style:italic;
+    color:var(--glow-1);
+  }
+  .sub{
+    color:var(--cream-dim);
+    max-width:38ch;
+    font-size:1.05rem;
+    margin-bottom:2.5rem;
+  }
+
+  /* LAMP + SLIDER SIGNATURE ELEMENT */
+  .demo{
+    width:100%;
+    max-width:420px;
+    margin-bottom:2.5rem;
+  }
+  .stage{
+    position:relative;
+    height:180px;
+    border-radius:14px;
+    background:linear-gradient(180deg, #4C6690 0%, var(--dusk-2) 100%);
+    overflow:hidden;
+    border:1px solid var(--slate);
+    transition:background 0.4s ease;
+  }
+  .stage.night{
+    background:linear-gradient(180deg, #0A1120 0%, #0E1626 100%);
+  }
+  .sun-moon{
+    position:absolute;
+    top:24px;
+    left:32px;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:#FFE9B0;
+    box-shadow:0 0 24px 6px rgba(255,233,176,0.55);
+    transition:transform 0.5s ease, background 0.5s ease, box-shadow 0.5s ease, left 0.5s ease, top 0.5s ease;
+  }
+  .stage.night .sun-moon{
+    background:#DCE4F2;
+    box-shadow:0 0 16px 4px rgba(220,228,242,0.35);
+    top:20px;
+    left:70%;
+  }
+  .wall{
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:70px;
+    background:#2A2015;
+  }
+  .lamp{
+    position:absolute;
+    bottom:70px;
+    left:50%;
+    transform:translateX(-50%);
+    width:26px;
+    height:34px;
+    border-radius:6px 6px 3px 3px;
+    background:#1A140C;
+    border:2px solid #3A2E1C;
+  }
+  .lamp::after{
+    content:"";
+    position:absolute;
+    inset:4px;
+    border-radius:3px;
+    background:transparent;
+    transition:background 0.4s ease, box-shadow 0.4s ease;
+  }
+  .stage.night .lamp::after{
+    background:var(--glow-1);
+    box-shadow:0 0 22px 8px rgba(245,166,35,0.55);
+  }
+  .slider-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:1rem;
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    color:var(--cream-dim);
+  }
+  input[type="range"]{
+    flex:1;
+    accent-color:var(--glow-1);
+  }
+
+  .cta{
+    display:inline-block;
+    background:var(--glow-1);
+    color:#241505;
+    font-weight:600;
+    font-size:1rem;
+    padding:0.95rem 2.2rem;
+    border-radius:100px;
+    text-decoration:none;
+    letter-spacing:0.01em;
+    transition:transform 0.15s ease, background 0.15s ease;
+  }
+  .cta:hover{transform:translateY(-2px); background:var(--glow-2);}
+  .cta-note{
+    font-size:12px;
+    color:var(--cream-dim);
+    margin-top:0.75rem;
+    font-family:'Space Mono',monospace;
+  }
+
+  /* FEATURES */
+  .features{
+    padding:4rem 1.5rem;
+    max-width:920px;
+    margin:0 auto;
+  }
+  .features-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1.5rem;
+    margin-top:2rem;
+  }
+  .feature{
+    background:var(--panel);
+    border:1px solid var(--slate);
+    border-radius:12px;
+    padding:1.5rem;
+  }
+  .feature-num{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    color:var(--glow-2);
+    margin-bottom:0.6rem;
+  }
+  .feature h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:1.15rem;
+    margin-bottom:0.5rem;
+  }
+  .feature p{
+    color:var(--cream-dim);
+    font-size:0.92rem;
+  }
+  .section-title{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:1.6rem;
+    text-align:center;
+  }
+
+  /* FINAL CTA */
+  .final{
+    text-align:center;
+    padding:4rem 1.5rem 5rem;
+    background:var(--dusk-2);
+  }
+  .final .headline{font-size:clamp(1.6rem,4vw,2.2rem); max-width:20ch; margin:0 auto 1.5rem;}
+
+  .disclosure{
+    text-align:center;
+    padding:1.5rem;
+    font-size:11px;
+    color:var(--cream-dim);
+    font-family:'Space Mono',monospace;
+    border-top:1px solid var(--slate);
+  }
+
+  @media (max-width:640px){
+    .features-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero" id="hero">
+  <p class="eyebrow">OFEEL · lampu dinding tenaga surya</p>
+  <h1 class="headline">Kumpulkan matahari,<br><em>nyalakan malam</em></h1>
+  <p class="sub">Panel surya menyerap cahaya siang, baterainya menyala otomatis begitu langit gelap. Tempel di dinding, tanpa kabel, tanpa tagihan listrik tambahan.</p>
+
+  <div class="demo">
+    <div class="stage" id="stage">
+      <div class="sun-moon" id="sunmoon"></div>
+      <div class="wall"></div>
+      <div class="lamp"></div>
+    </div>
+    <div class="slider-row">
+      <span>Siang</span>
+      <input type="range" min="0" max="100" value="15" id="timeSlider">
+      <span>Malam</span>
+    </div>
+  </div>
+
+  <a class="cta" href="#" id="ctaLink" target="_blank" rel="noopener">Lihat produk di Shopee</a>
+  <p class="cta-note">*Klik link - untuk bisa dapat harga & promo yang sama</p>
+</section>
+
+<section class="features">
+  <h2 class="section-title">Kenapa banyak rumah pasang ini</h2>
+  <div class="features-grid">
+    <div class="feature">
+      <p class="feature-num">01</p>
+      <h3>Otomatis nyala</h3>
+      <p>Sensor cahaya bawaan bikin lampu menyala sendiri pas matahari terbenam, mati sendiri pas pagi.</p>
+    </div>
+    <div class="feature">
+      <p class="feature-num">02</p>
+      <h3>Tahan cuaca luar</h3>
+      <p>Bodi tahan hujan, cocok dipasang di teras, pagar, taman, atau dinding luar rumah.</p>
+    </div>
+    <div class="feature">
+      <p class="feature-num">03</p>
+      <h3>Pasang tanpa teknisi</h3>
+      <p>Cukup baut atau tempel dengan dudukan yang disertakan, tidak perlu instalasi listrik.</p>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <h2 class="headline voice">Rumahmu tetap terang, tagihan listrik tetap tenang</h2>
+  <a class="cta" href="#" id="ctaLink2" target="_blank" rel="noopener">Cek harga & stok sekarang</a>
+</section>
+
+<p class="disclosure">Halaman ini berisi tautan Shopee Marketplace.</p>
+
+<script>
+  const link = "https://s.shopee.co.id/gOWVzkDgh";
+  document.getElementById('ctaLink').href = link;
+  document.getElementById('ctaLink2').href = link;
+
+  const slider = document.getElementById('timeSlider');
+  const stage = document.getElementById('stage');
+  const sunmoon = document.getElementById('sunmoon');
+
+  slider.addEventListener('input', () => {
+    const v = parseInt(slider.value, 10);
+    if (v > 55) {
+      stage.classList.add('night');
+    } else {
+      stage.classList.remove('night');
+    }
+  });
+</script>
+
+</body>
+</html>
